@@ -5,16 +5,9 @@ def print_header
 end
 
 def print_names(names)
-  counter = 0
-  while counter < names.length
-    puts "#{names[counter][:name]} (#{names[counter][:cohort]} cohort)"
-    counter += 1
+  names.each do |students|
+    puts "#{students[:name]} (#{students[:cohort]} cohort). They like #{students[:hobby]}, and they are #{students[:height]}cm tall!"
   end
-#  names.each do |student|
-#    if student[:name].length < 12
-#      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-#    end
-#  end
 end
 
 def print_footer(names)
@@ -22,14 +15,22 @@ def print_footer(names)
 end
 
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter the names of the students along with further details"
   puts "To finish, just hit return twice"
   students =[]
   name = gets.chomp
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    puts "What is #{name}'s main hobby?"
+    hobby = gets.chomp
+    puts "How tall is #{name} in cm?"
+    height = gets.chomp
+    students << {name: name, cohort: :november, hobby: hobby, height: height}
     puts "Now we have #{students.count} students"
+    puts "Next student?"
     name = gets.chomp
+      if name == nil
+        break
+      end
   end
   students
 end
