@@ -5,11 +5,16 @@ def print_header
 end
 
 def print_names(names)
-  names.each do |student|
-    if student[:name].length < 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
+  counter = 0
+  while counter < names.length
+    puts "#{names[counter][:name]} (#{names[counter][:cohort]} cohort)"
+    counter += 1
   end
+#  names.each do |student|
+#    if student[:name].length < 12
+#      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+#    end
+#  end
 end
 
 def print_footer(names)
