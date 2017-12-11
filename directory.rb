@@ -5,8 +5,10 @@ def print_header
 end
 
 def print_names(names)
-  names.each_with_index do |students, index|
-    puts "#{index + 1}. #{students[:name]} (#{students[:cohort]} cohort)"
+  names.each do |student|
+    if student[:name].downcase.start_with?("e")
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
