@@ -9,7 +9,11 @@ def print_names(names)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(80)
+  if names.count == 1
+    puts "Overall, we have #{names.count} great student!".center(80)
+  else
+    puts "Overall, we have #{names.count} great students".center(80)
+  end
 end
 
 def input_students
