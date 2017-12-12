@@ -22,15 +22,15 @@ def input_students
   students =[]
   loop do
     puts "Name?"
-    name = gets.chomp.downcase.capitalize
+    name = gets.strip.downcase.capitalize
     if name.empty? == true
       break loop
     end
     puts "#{name}'s cohort?"
-    cohort = gets.chomp.downcase
+    cohort = gets.strip.downcase
     if ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"].include?(cohort) == false
       puts "Are you sure that's a month? Try again! If you're not sure of the cohort at this time, simply press enter."
-      cohort = gets.chomp.downcase
+      cohort = gets.strip.downcase
       if cohort == ""
         cohort = "Unknown"
       end
