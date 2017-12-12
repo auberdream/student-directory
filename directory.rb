@@ -36,6 +36,11 @@ def input_students
       end
     end
     students << {name: name, cohort: cohort.capitalize.to_sym}
+    if students.count == 1
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
   end
   students
 end
