@@ -1,4 +1,5 @@
 @students = []
+require 'csv'
 
 def print_header
   puts "The students of Villains Academy"
@@ -20,7 +21,7 @@ def input_students()
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   while !name.empty? do
-    @students << {name: name, cohort: :november}
+    push_students_to_array(name)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
@@ -30,7 +31,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "4. Load the students from students.csv"
+  puts "4. Load the students from file"
   puts "9. Exit"
 end
 
@@ -49,7 +50,9 @@ def process(selection)
     when "3"
       save_students
     when "4"
-      load_students
+      puts "What file would you like to load?"
+      file = gets.chomp
+      load_students(file)
     when "9"
       exit
     else
@@ -65,32 +68,37 @@ def interactive_menu
 end
 
 def save_students
-  file = File.open("students.csv", "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  file = CSV.open("students.csv", "w") do |csv|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv << student_data
+    end
   end
-  file.close
+  puts "Saved to file successfully"
 end
 
-def load_students(filename = "students.csv")
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+def push_students_to_array(name)
+  @students << {name: name, cohort: :november}
+end
+
+def load_students(filename)
+  CSV.foreach(filename) do |csv|
+    name, cohort = csv
+    push_students_to_array(name)
   end
-  file.close
+  puts "Loaded #{filename} successfully"
 end
 
 def try_load_students
   filename = ARGV.first
-  return if filename.nil?
-  if File.exists?(filename)
+  if (filename != nil) && (File.exist?(filename))
     load_students(filename)
-  else
+    puts "Loaded #{@students.count} from #{filename}"
+  elsif (filename != nil) && (!File.exist?(filename))
     puts "Sorry #{filename} doesn't exist."
     exit
+  elsif filename == nil
+    load_students("students.csv")
   end
 end
 
